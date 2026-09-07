@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners, these should be filled in appropriately as they are your "business card" -->
+  <!-- Search Engine -->
+  <meta name="description" content="SNICTalk: a speech-driven 3D facial animation framework that uses SNIC bifurcation oscillator dynamics, inspired by cardiac pacemaker cells, to generate genuine rest states between phonemes.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="SNICTalk: Biologically Inspired SNIC Oscillator Dynamics for Temporally Coherent Speech-Driven 3D Facial Animation" />
+  <meta property="og:description" content="A three-path architecture that combines a Mamba backbone with SNIC-bifurcation oscillators to give speech-driven 3D facial animation genuine, geometrically-grounded rest states." />
+  <meta property="og:url" content="https://fjafari.github.io/SNICTalk/"/>
+  <meta property="og:image" content="static/images/fig_method.png" />
+  <meta property="og:image:width" content="1800"/>
+  <meta property="og:image:height" content="1153"/>
+
+  <meta name="twitter:title" content="SNICTalk: Biologically Inspired SNIC Oscillator Dynamics for 3D Facial Animation">
+  <meta name="twitter:description" content="SNIC-bifurcation oscillator dynamics for temporally coherent speech-driven 3D facial animation.">
+  <meta name="twitter:image" content="static/images/fig_method.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="speech-driven facial animation, 3D talking head, SNIC bifurcation, State Space Models, Mamba, biological pacemaker, temporal coherence">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SNICTalk: Biologically Inspired SNIC Oscillator Dynamics for 3D Facial Animation</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma-carousel/4.0.24/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma-slider/2.0.5/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bulma-carousel/4.0.24/js/bulma-carousel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bulma-slider/2.0.5/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SNICTalk: Biologically Inspired SNIC Oscillator Dynamics for Temporally Coherent Speech-Driven 3D Facial Animation</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="mailto:farzane1@ualberta.ca" target="_blank">Farzaneh Jafari</a><sup>1</sup>,</span>
+            <span class="author-block">
+              and Anup Basu<sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Alberta, Edmonton, AB, Canada</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF link -->
+              <span class="link-block">
+                <a href="static/pdfs/snictalk.pdf" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper</span>
+              </a>
+            </span>
+
+            <!-- Supplementary video -->
+            <span class="link-block">
+              <a href="https://youtu.be/h6A_m__8E0A" target="_blank"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon"><i class="fas fa-video"></i></span>
+              <span>Video</span>
+            </a>
+          </span>
+
+          <!-- Github link -->
+          <span class="link-block">
+            <a href="https://github.com/fjafari/SNICTalk" target="_blank"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+        </span>
+
+        <!-- arXiv link -->
+        <span class="link-block">
+          <a href="#" target="_blank"
+          class="external-link button is-normal is-rounded is-dark">
+          <span class="icon"><i class="ai ai-arxiv"></i></span>
+          <span>arXiv</span>
+        </a>
+      </span>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Teaser video -->
+<section class="hero teaser">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <div class="publication-video-outer">
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/h6A_m__8E0A" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="SNICTalk supplementary video"></iframe>
+        </div>
+      </div>
+      <h2 class="subtitle has-text-centered">
+        A phase oscillator whose geometry encodes rest: SNICTalk on BIWI and VOCASET.
+      </h2>
+    </div>
+  </div>
+</section>
+<!-- End teaser video -->
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          <p>
+          Speech-driven 3D facial animation requires accurate vertex prediction together with realistic temporal articulation. Beyond lip synchronization, facial motion must exhibit natural periods of rest interleaved with rapid articulatory events. Existing approaches are trained with mean-squared error objectives that consistently converge toward over-smoothed average trajectories that lack genuine rest states between phonemes, a failure rooted in the absence of any structural prior for the rhythmic organization of articulatory motion. Inspired by cardiac pacemaker dynamics, we propose a biologically inspired mechanism that uses the same mathematical substrate, the Saddle-Node on Invariant Circle (SNIC) bifurcation, in which a limit cycle is formed by the collision of a stable rest state and a threshold on a closed orbit. The geometric consequence is a ghost zone where the orbit dwells arbitrarily long near the annihilated rest state, providing precisely the structural prior that sequence models lack, a natural attractor encoding closed-mouth silence, whose dwell time scales continuously with audio drive, from complete rest to rapid articulation. Extensive experiments on BIWI and VOCASET demonstrate that SNICTalk consistently achieves state-of-the-art geometric accuracy and motion dynamics diversity, producing facial motion with natural rest-articulation transitions rather than over-smoothed averages. 
+          </p>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Motivation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Why does facial motion need a rest state?</h2>
+        <div class="content has-text-justified">
+          <p>
+            Current methods treat speech-driven facial animation as sequence regression, trained end-to-end with per-frame MSE. MSE training converges toward the conditional mean of the vertex distribution at each frame, which suppresses the high-variance components of motion, the sharp onset of a vowel, the rapid release of a plosive, and the return to true rest during silence. There is no explicit structural mechanism for the face to return to its neutral template during silence, because the average prediction over silent training examples is typically a small non-zero displacement rather than the neutral template.
+          </p>
+          <p>
+            We take our answer from cardiac electrophysiology. Sinoatrial pacemaker cells operate near a Saddle-Node on Invariant Circle (SNIC) bifurcation, in which a stable rest state and a threshold coexist as fixed points on a closed orbit. As a continuous drive parameter crosses a critical value, the two fixed points collide and annihilate, releasing the orbit, but the trajectory still slows dramatically near the location of the annihilated rest state, the ghost zone. We argue this matches the dynamical structure of speech. The ghost zone is the closed-mouth neutral face during silence, and the fast arc of the orbit is the articulatory cycle of a phoneme.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End motivation -->
+
+<!-- Method -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Method</h2>
+        <figure class="image" style="margin-bottom: 1rem;">
+          <img src="static/images/fig_method.png" alt="Overall architecture of SNICTalk: a Mamba geometry backbone, EnvelopeSNIC, and CoherenceSNIC, fused additively and added to the neutral template.">
+        </figure>
+        <p class="has-text-grey is-size-7" style="margin-bottom:2rem;">
+          <strong>Fig. 1.</strong> Raw audio is encoded by a frozen Wav2Vec2 encoder and aligned to the target frame rate. The shared audio representation is processed by three complementary branches: a Mamba-based geometry backbone, EnvelopeSNIC, and CoherenceSNIC, whose outputs are fused additively and combined with the neutral template to produce the final animated 3D face.
+        </p>
+        <div class="content has-text-justified">
+          <p>
+            SNICTalk is a three-path architecture. <strong>Path 1 (Mamba backbone)</strong> is a selective state-space model with LayerNorm and a GELU feed-forward network, providing accurate per-frame vertex positions but no genuine rest states on its own. <strong>Path 2 (EnvelopeSNIC)</strong> is a single-phase SNIC oscillator over the full mesh that decides whether the face is mid-articulation or at rest, giving a geometric inductive prior for the temporal envelope of speech. <strong>Path 3 (CoherenceSNIC)</strong> is an eight-oscillator, gap-junction-coupled ensemble operating exclusively on lip vertices, synchronized the way sinoatrial pacemaker cells synchronize, to capture fine-scale, spatially coherent phoneme-specific articulation.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End method -->
+
+<!-- Ghost zone dynamics figure -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">The ghost zone, traced through a word</h2>
+        <figure class="image" style="margin-bottom: 1rem;">
+          <img src="static/images/fig_ghost_zone.png" alt="SNIC oscillator dynamics underlying SNICTalk's articulatory event detection for the utterance ball.">
+        </figure>
+        <p class="has-text-grey is-size-7" style="margin-bottom:2rem;">
+          <strong>Fig. 2.</strong> Illustration of the SNIC oscillator dynamics underlying SNICTalk's articulatory event detection for the utterance &ldquo;ball.&rdquo; The oscillator's input current <em>I(t)</em> is parked near the ghost of the saddle-node fixed point during silence, crosses the bifurcation threshold <em>I<sub>SNIC</sub></em> at the bilabial burst, circulates through the open-vowel peak, and re-parks at post-utterance silence &mdash; returning the face to its neutral template without any explicit rest-state loss.
+        </p>
+        <div class="content has-text-justified">
+          <p>
+            When the audio drive falls below the bifurcation threshold, the phase orbit dwells at the ghost of the annihilated rest state, with dwell time scaling as <em>&tau;<sub>ghost</sub> &prop; 1/&radic;(I &minus; I<sub>SNIC</sub>)</em>. This diverges as the drive approaches threshold from above, letting the oscillator idle indefinitely during silence while still transitioning continuously into rapid articulation &mdash; unlike a Hopf oscillator, which bifurcates immediately to a non-zero onset frequency and cannot represent genuine stillness without an external, learned gating mechanism.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End ghost zone figure -->
+
+<!-- CoherenceSNIC figure -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">CoherenceSNIC: coupled oscillators on the lip region</h2>
+        <figure class="image" style="margin-bottom: 1rem;">
+          <img src="static/images/fig_coherence.png" alt="Schematic of CoherenceSNIC mapped onto the lip region, showing eight gap-junction-coupled oscillators.">
+        </figure>
+        <p class="has-text-grey is-size-7" style="margin-bottom:2rem;">
+          <strong>Fig. 3.</strong> The shared audio drive <em>I(t)</em> conditions an ensemble of eight coupled oscillators distributed around the lip contour. Solid lines denote local coupling between adjacent oscillators; dashed lines denote long-range coupling between opposing oscillators. The resulting correction is gated and applied exclusively to lip vertices, with a Gaussian boundary weight blending it smoothly into the surrounding face.
+        </p>
+        <div class="content has-text-justified">
+          <p>
+            Gap-junction coupling between adjacent pacemaker cells synchronizes phase through a resistive current proportional to phase difference. We implement this as multi-scale diffusion coupling &mdash; dilation scales {1, 2, 4} &mdash; between the eight oscillators, giving lip vertex motion that is coherent across the lip region while retaining enough phase diversity to represent the distinct kinematics of the upper lip, lower lip, and lip corners.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End CoherenceSNIC figure -->
+
+<!-- Quantitative results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Quantitative Results</h2>
+        <div class="content has-text-justified">
+          <p>SNICTalk achieves the best MVE, LVE, FDD, and FFE on BIWI6 and VOCASET against nine state-of-the-art baselines, indicating that the SNIC-based inductive prior improves both static reconstruction accuracy and motion diversity rather than trading one for the other.</p>
+        </div>
+
+        <div class="table-container" style="margin-top:1.5rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th>Method (BIWI6)</th>
+                <th>MVE&nbsp;&darr;</th>
+                <th>LVE&nbsp;&darr;</th>
+                <th>MOD&nbsp;&darr;</th>
+                <th>VE&nbsp;&darr;</th>
+                <th>AE&nbsp;&darr;</th>
+                <th>TC&nbsp;&darr;</th>
+                <th>FDD&nbsp;&darr;</th>
+                <th>FFE&nbsp;&darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>FaceFormer (CVPR&nbsp;22)</td><td>2.4821</td><td>3.6900</td><td>6.6621</td><td>5.7173</td><td>7.4978</td><td>4.9266</td><td>3.8124</td><td>3.8601</td></tr>
+              <tr><td>SelfTalk (ACM&nbsp;MM&nbsp;23)</td><td>2.4656</td><td>3.6019</td><td>6.6135</td><td>6.1284</td><td>7.5776</td><td>4.9976</td><td>4.5670</td><td>3.8310</td></tr>
+              <tr><td>MemoryTalker (ICCV&nbsp;25)</td><td>2.4998</td><td>3.7726</td><td>6.7373</td><td>6.2468</td><td>7.6648</td><td>5.7877</td><td>4.7975</td><td>4.0134</td></tr>
+              <tr><td>JambaTalk (TOMM&nbsp;26)</td><td>2.4135</td><td>3.5744</td><td>6.5691</td><td>5.9408</td><td>7.3323</td><td>5.0528</td><td>3.9094</td><td>3.6629</td></tr>
+              <tr class="has-background-warning-light"><td><strong>SNICTalk (Ours)</strong></td><td><strong>2.3776</strong></td><td><strong>3.5238</strong></td><td>6.4816</td><td>5.5974</td><td><strong>7.2375</strong></td><td>4.3759</td><td><strong>3.6898</strong></td><td><strong>3.6328</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-container" style="margin-top:2rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th>Method (VOCASET)</th>
+                <th>MVE&nbsp;&darr;</th>
+                <th>LVE&nbsp;&darr;</th>
+                <th>MOD&nbsp;&darr;</th>
+                <th>VE&nbsp;&darr;</th>
+                <th>AE&nbsp;&darr;</th>
+                <th>TC&nbsp;&darr;</th>
+                <th>FDD&nbsp;&darr;</th>
+                <th>FFE&nbsp;&darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>SelfTalk (ACM&nbsp;MM&nbsp;23)</td><td>0.8475</td><td>3.0535</td><td>1.8317</td><td>1.2953</td><td>2.0130</td><td>0.7840</td><td>0.7613</td><td>0.6752</td></tr>
+              <tr><td>MemoryTalker (ICCV&nbsp;25)</td><td>0.8452</td><td>2.9995</td><td>1.7505</td><td>1.0548</td><td>1.9218</td><td>0.7757</td><td>0.8224</td><td>0.6585</td></tr>
+              <tr><td>JambaTalk (TOMM&nbsp;26)</td><td>0.8311</td><td>3.0900</td><td>1.8128</td><td>1.2347</td><td>1.9551</td><td>0.7339</td><td>0.8554</td><td>0.6730</td></tr>
+              <tr class="has-background-warning-light"><td><strong>SNICTalk (Ours)</strong></td><td><strong>0.8264</strong></td><td><strong>2.9292</strong></td><td>1.7974</td><td>1.2608</td><td><strong>1.9073</strong></td><td>0.7672</td><td><strong>0.7610</strong></td><td><strong>0.6397</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="has-text-grey is-size-7" style="margin-top:0.75rem;">MVE / LVE in &times;10&minus;3 m; MOD / VE / AE / TC / FDD / FFE in &times;10&minus;4 m. Full nine-baseline comparison across all three datasets is reported in the paper.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End quantitative results -->
+
+<!-- Ablation -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Path-Level Ablation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Removing Path 2 (EnvelopeSNIC) leaves geometric accuracy and temporal quality largely intact, even improving MOD, VE, AE, and TC, but costs FDD and FFE. Removing Path 3 (CoherenceSNIC) shows the reverse pattern in part, winning MOD, AE, and FFE outright while losing ground on VE, TC, and FDD. Neither ablated variant dominates the full model &mdash; evidence that the two paths target genuinely different aspects of facial motion: rest-timing and spatial diversity, respectively.
+          </p>
+        </div>
+        <div class="table-container" style="margin-top:1.5rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr><th>Configuration</th><th>MVE&nbsp;&darr;</th><th>LVE&nbsp;&darr;</th><th>TC&nbsp;&darr;</th><th>FDD&nbsp;&darr;</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Path 1 only (backbone)</td><td>2.3928</td><td>3.5594</td><td>4.8338</td><td>4.2783</td></tr>
+              <tr><td>w/o Path 2</td><td>2.3947</td><td>3.5828</td><td>4.4896</td><td>4.2165</td></tr>
+              <tr><td>w/o Path 3</td><td>2.3793</td><td>3.5543</td><td>4.6367</td><td>3.8172</td></tr>
+              <tr class="has-background-warning-light"><td><strong>All paths (ours)</strong></td><td><strong>2.3776</strong></td><td><strong>3.5238</strong></td><td>4.3759</td><td><strong>3.6898</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End ablation -->
+
+<!-- User study -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">User Study</h2>
+        <div class="content has-text-justified">
+          <p>
+            32 participants on Amazon Mechanical Turk compared SNICTalk against six baselines in a forced-choice A/B test on realism and lip-sync, on one representative sample each from VOCASET and BIWI6, with method identity withheld and left/right placement randomized.
+          </p>
+        </div>
+        <div class="table-container" style="margin-top:1rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr><th>Comparison</th><th>VOCASET &mdash; Realism</th><th>BIWI6 &mdash; Realism</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Ours vs. JambaTalk</td><td>65.6% ours</td><td>93.8% ours</td></tr>
+              <tr><td>Ours vs. CodeTalker</td><td>78.1% ours</td><td>73.3% ours</td></tr>
+              <tr><td>Ours vs. MemoryTalker</td><td>75.0% ours</td><td>71.9% ours</td></tr>
+              <tr><td>Ours vs. TalkingStyle</td><td>81.3% ours</td><td>54.8% ours</td></tr>
+              <tr><td>Ours vs. FaceFormer</td><td>84.4% ours</td><td>65.6% ours</td></tr>
+              <tr><td>Ours vs. FaceDiffuser</td><td>68.8% ours</td><td>59.4% ours</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End user study -->
+
+<!-- BibTeX citation -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{jafari2026snictalk,
+  title   = {SNICTalk: Biologically Inspired SNIC Oscillator Dynamics for
+             Temporally Coherent Speech-Driven 3D Facial Animation},
+  author  = {Jafari, Farzaneh and Basu, Anup},
+  year    = {2026}
+}</code></pre>
+  </div>
+</section>
+<!-- End BibTeX citation -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This research was partially funded by the Natural Sciences and Engineering Research Council (NSERC) and the Alberta Innovates Discovery Supplement fund.
+          </p>
+          <p>
+            Correspondence: <a href="mailto:farzane1@ualberta.ca">farzane1@ualberta.ca</a>, University of Alberta.
+          </p>
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>, which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page. This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
