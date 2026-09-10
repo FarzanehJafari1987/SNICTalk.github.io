@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- Meta tags for social media banners -->
+  <meta name="description" content="SNICTalk: a speech-driven 3D facial animation framework that introduces a SNIC-bifurcation-inspired temporal prior for threshold-dependent transitions between near-rest and active articulation.">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="SNICTalk: SNIC-Inspired Dynamics for Temporally Coherent Speech-Driven 3D Facial Animation" />
+  <meta property="og:description" content="A three-component architecture combining a Mamba reconstruction backbone, a SNIC-inspired rest-articulation module, and a lip-focused refinement component for speech-driven 3D facial animation." />
+  <meta property="og:url" content="https://fjafari.github.io/SNICTalk/"/>
+  <meta property="og:image" content="static/images/fig_method.png" />
+  <meta property="og:image:width" content="1800"/>
+  <meta property="og:image:height" content="840"/>
+
+  <meta name="twitter:title" content="SNICTalk: SNIC-Inspired Dynamics for Temporally Coherent Speech-Driven 3D Facial Animation">
+  <meta name="twitter:description" content="A SNIC-bifurcation-inspired temporal prior for speech-driven 3D facial animation.">
+  <meta name="twitter:image" content="static/images/fig_method.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="speech-driven facial animation, 3D talking head, SNIC bifurcation, State Space Models, Mamba, rest-articulation dynamics, temporal coherence">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SNICTalk: SNIC-Inspired Dynamics for Temporally Coherent Speech-Driven 3D Facial Animation</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma-carousel/4.0.24/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma-slider/2.0.5/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bulma-carousel/4.0.24/js/bulma-carousel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bulma-slider/2.0.5/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">SNICTalk: SNIC-Inspired Dynamics for Temporally Coherent Speech-Driven 3D Facial Animation</h1>
+          <h2 class="title is-4 publication-venue">EUROGRAPHICS 2027 &middot; Volume 46 (2027), Number 2</h2>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="mailto:farzane1@ualberta.ca" target="_blank">Farzaneh Jafari</a><sup>1</sup>,</span>
+            <span class="author-block">
+              Anup Basu<sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>University of Alberta, Edmonton, AB, Canada</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF link -->
+              <span class="link-block">
+                <a href="static/pdfs/snictalk.pdf" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                <span>Paper</span>
+              </a>
+            </span>
+
+            <!-- Supplementary video -->
+            <span class="link-block">
+              <a href="https://youtu.be/DvgbWCocQ1g" target="_blank"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon"><i class="fas fa-video"></i></span>
+              <span>Video</span>
+            </a>
+          </span>
+
+          <!-- Github link -->
+          <span class="link-block">
+            <a href="https://github.com/fjafari/SNICTalk" target="_blank"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+        </span>
+
+        <!-- arXiv link -->
+        <span class="link-block">
+          <a href="#" target="_blank"
+          class="external-link button is-normal is-rounded is-dark">
+          <span class="icon"><i class="ai ai-arxiv"></i></span>
+          <span>arXiv</span>
+        </a>
+      </span>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Teaser figure: I(t) crossing I_SNIC across a full utterance -->
+<section class="section" style="padding-top: 0;">
+  <div class="container is-max-widescreen">
+    <figure class="image" style="margin-bottom: 0.5rem;">
+      <img src="static/images/fig_teaser.png" alt="As speech energy crosses the threshold I_SNIC, the phase sweeps around its invariant circle across the phrase Oh, I've missed you, I've been going completely doolally up here, acting as a bias that shapes the predicted rest-articulation dynamics.">
+    </figure>
+    <p class="has-text-grey is-size-7 has-text-centered">
+      <strong>Fig. 1.</strong> SNICTalk drives facial animation through SNIC-inspired dynamics. As speech energy crosses the threshold <em>I<sub>SNIC</sub></em>, the phase sweeps around its invariant circle, shown here across an utterance, acting as a bias that shapes the predicted rest&ndash;articulation dynamics.
+    </p>
+  </div>
+</section>
+
+<!-- Teaser video -->
+<section class="hero teaser">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <div class="publication-video-outer">
+        <div class="publication-video">
+          <iframe src="https://www.youtube.com/embed/DvgbWCocQ1g" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen title="SNICTalk supplementary video"></iframe>
+        </div>
+      </div>
+      <h2 class="subtitle has-text-centered">
+        SNICTalk on BIWI and VOCASET: threshold-dependent transitions between near-rest and active articulation.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- Paper abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Speech-driven 3D facial animation requires both accurate facial geometry and realistic temporal dynamics. Natural speech alternates between active articulatory events and lower-motion intervals, whereas data-driven sequence models often produce temporally averaged trajectories with residual motion or reduced-amplitude articulation. We address this limitation by introducing a dynamical prior inspired by the qualitative behavior of Saddle-Node on Invariant Circle (SNIC) bifurcations.
+          </p>
+          <p>
+            SNICTalk is a three-component architecture that separates global geometric reconstruction, rest&ndash;articulation dynamics, and local lip-focused refinement. A Mamba-based reconstruction backbone predicts global facial motion from speech features, and the SNIC-inspired temporal module introduces threshold-dependent transitions between near-rest and active articulation via an audio-driven leaky state with a differentiable reset mechanism. A complementary lip-focused refinement component sharpens local temporal coordination and fine-grained articulatory motion using oscillator-conditioned temporal features, multi-scale temporal mixing, and content-dependent attention.
+          </p>
+          <p>
+            Experiments on BIWI and VOCASET show strong geometric reconstruction and motion-dynamics performance.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End paper abstract -->
+
+<!-- Motivation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Why sequence regression forgets how to rest</h2>
+        <div class="content has-text-justified">
+          <p>
+            An effective talking head must reproduce the rich temporal dynamics of human articulation &mdash; the sudden jaw opening at vowel onset, the brief bilabial closure of stop consonants, and the return of the face to its neutral resting position during inter-word pauses. These properties are episodic and threshold-driven, punctuated by genuine rest states, rather than independent frame-level phenomena. Many recent systems, however, formulated as sequence prediction or regression, can achieve low geometric reconstruction error while still producing trajectories with reduced motion diversity, residual movement during low-motion intervals, or attenuated articulatory events &mdash; not because existing methods fail outright, but because nothing in a standard reconstruction objective encodes this rhythmic structure explicitly.
+          </p>
+          <p>
+            We take our inspiration from the qualitative behavior of the Saddle-Node on Invariant Circle (SNIC) bifurcation. Jia et al. (Nature, 2023) found that cardiac cells in the developing zebrafish embryonic heart operate near a SNIC bifurcation, where a stable rest state and an activation threshold coexist as fixed points on a closed orbit in phase space. As a continuous drive parameter crosses a critical value, the two fixed points collide and annihilate, releasing the orbit to circulate freely &mdash; yet the trajectory still slows dramatically near the location of the annihilated rest state, the <em>ghost zone</em>, with dwell time scaling as <em>(I &minus; I<sub>SNIC</sub>)<sup>&minus;1/2</sup></em>. This lets the system oscillate at an arbitrarily low frequency near threshold and rest effectively during periods of low drive &mdash; a useful conceptual model for speech, where articulatory events emerge from low-motion states and return toward them as the signal changes.
+          </p>
+          <p>
+            SNICTalk does not numerically simulate the canonical continuous-time SNIC system, nor claim mathematical equivalence to biological pacemaker dynamics. Instead, SNIC theory motivates a differentiable temporal module that preserves the functional properties most relevant to facial animation: threshold-dependent activation, low-motion behavior below the activation boundary, and continuous modulation of activity by the speech signal.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End motivation -->
+
+<!-- Method -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Method</h2>
+        <figure class="image" style="margin-bottom: 1rem;">
+          <img src="static/images/fig_method.png" alt="Overall architecture of SNICTalk: a Mamba-based geometric reconstruction backbone, a SNIC-inspired rest-articulation module, and a lip-focused refinement component, fused additively and added to the neutral template.">
+        </figure>
+        <p class="has-text-grey is-size-7" style="margin-bottom:2rem;">
+          <strong>Fig. 2.</strong> Shared Wav2Vec 2.0 audio features are processed by three complementary components: a Mamba-based geometric reconstruction backbone (<em>o<sub>1</sub></em>), a SNIC-inspired rest-articulation module using a threshold-and-reset mechanism (<em>o<sub>2</sub></em>), and a lip-focused refinement component &mdash; Temporal State Encoder (TSE), Multi-scale Temporal Mixer (MTM), Adaptive Motion Attention (AMA) &mdash; producing a spatially localized correction (<em>o<sub>3</sub></em>). The three outputs are summed with the neutral template to produce the final predicted facial motion.
+        </p>
+        <div class="content has-text-justified">
+          <p>
+            SNICTalk separates the problem into three complementary components, each processing a shared, frozen-convolution Wav2Vec2 (XLSR-53) audio representation. The <strong>geometric reconstruction backbone</strong> is a selective state-space model (Mamba) with LayerNorm and a GELU feed-forward network, predicting the primary per-frame vertex displacement; its output projection is zero-initialized so the network begins training from the neutral template. The <strong>SNIC-inspired rest-articulation module</strong> integrates an audio-conditioned drive over time via a leaky exponential moving average, applies a learned, differentiable threshold-and-reset (soft reset) once the state approaches an activation threshold, and projects the result to a mean-centered, sigmoid-gated vertex correction &mdash; distinguishing near-rest intervals from active articulatory events without explicit rest-state supervision. The <strong>lip-focused refinement</strong> component chains a Temporal State Encoder (a smaller instance of the same threshold-and-reset mechanism), a Multi-scale Temporal Mixer that combines causal dilated convolutions at three time scales, and Adaptive Motion Attention over eight learned latent motion components, before projecting a Gaussian-weighted correction restricted to the lip region.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End method -->
+
+<!-- Ghost zone dynamics figure -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">The ghost zone, traced through a word</h2>
+        <figure class="image" style="margin-bottom: 1rem;">
+          <img src="static/images/fig_ball.png" alt="SNIC-inspired rest-articulation dynamics in SNICTalk for the utterance ball, showing five phonetic stages from pre-onset silence through the bilabial stop, open vowel, lateral, and post-utterance silence.">
+        </figure>
+        <p class="has-text-grey is-size-7" style="margin-bottom:2rem;">
+          <strong>Fig. 3.</strong> Conceptual illustration of the SNIC-inspired rest-articulation dynamics for the utterance &ldquo;ball.&rdquo; During silence, the audio-conditioned input <em>I(t)</em> stays below the activation threshold <em>I<sub>SNIC</sub></em>, corresponding to a near-rest facial configuration. Around the onset of /b/, <em>I(t)</em> approaches threshold; during the vowel /O:/, <em>I(t)</em> far exceeds it, corresponding to peak facial deformation; as articulation decreases through /l/, the input decays back toward the low-activity regime; after the utterance, <em>I(t)</em> falls below threshold and the face returns toward near-rest. The circular diagrams are a conceptual visualization and not exact numerical phase-space trajectories of a canonical SNIC oscillator.
+        </p>
+        <div class="content has-text-justified">
+          <p>
+            The dwell time near the ghost of the annihilated rest state diverges as the drive approaches threshold from below, letting the rest-articulation module idle indefinitely during silence while still transitioning continuously into rapid articulation as speech energy rises &mdash; a threshold-sensitive representation of rest&ndash;articulation transitions that remains fully differentiable over long sequences.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End ghost zone figure -->
+
+<!-- Quantitative results -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Quantitative Results</h2>
+        <div class="content has-text-justified">
+          <p>SNICTalk achieves the best result on six of eight metrics on BIWI6 (MVE, LVE, MOD, AE, FDD, FFE) and five of eight on VOCASET (MVE, LVE, AE, FDD, FFE) against nine state-of-the-art baselines, with the gains most pronounced on geometric accuracy and dynamics-diversity metrics.</p>
+        </div>
+
+        <div class="table-container" style="margin-top:1.5rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th>Method (BIWI6)</th>
+                <th>MVE&nbsp;&darr;</th>
+                <th>LVE&nbsp;&darr;</th>
+                <th>MOD&nbsp;&darr;</th>
+                <th>VE&nbsp;&darr;</th>
+                <th>AE&nbsp;&darr;</th>
+                <th>TC&nbsp;&darr;</th>
+                <th>FDD&nbsp;&darr;</th>
+                <th>FFE&nbsp;&darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>FaceFormer (CVPR&nbsp;22)</td><td>2.4821</td><td>3.6900</td><td>6.6621</td><td>5.7173</td><td>7.4978</td><td>4.9266</td><td>3.8124</td><td>3.8601</td></tr>
+              <tr><td>SelfTalk (ACM&nbsp;MM&nbsp;23)</td><td>2.4656</td><td>3.6019</td><td>6.6135</td><td>6.1284</td><td>7.5776</td><td>4.9976</td><td>4.5670</td><td>3.8310</td></tr>
+              <tr><td>PTalker (ACM&nbsp;MM&nbsp;25)</td><td>2.7742</td><td>4.1387</td><td>6.7655</td><td>5.0041</td><td>7.6241</td><td>4.1569</td><td>5.1227</td><td>4.7852</td></tr>
+              <tr><td>JambaTalk (ACM&nbsp;TOMM&nbsp;26)</td><td>2.4135</td><td>3.5744</td><td>6.5691</td><td>5.9408</td><td>7.3323</td><td>5.0528</td><td>3.9094</td><td>3.6629</td></tr>
+              <tr class="has-background-warning-light"><td><strong>SNICTalk (Ours)</strong></td><td><strong>2.3776</strong></td><td><strong>3.5238</strong></td><td><strong>6.4816</strong></td><td>5.5974</td><td><strong>7.2375</strong></td><td>4.3759</td><td><strong>3.6898</strong></td><td><strong>3.6328</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-container" style="margin-top:2rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr>
+                <th>Method (VOCASET)</th>
+                <th>MVE&nbsp;&darr;</th>
+                <th>LVE&nbsp;&darr;</th>
+                <th>MOD&nbsp;&darr;</th>
+                <th>VE&nbsp;&darr;</th>
+                <th>AE&nbsp;&darr;</th>
+                <th>TC&nbsp;&darr;</th>
+                <th>FDD&nbsp;&darr;</th>
+                <th>FFE&nbsp;&darr;</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>SelfTalk (ACM&nbsp;MM&nbsp;23)</td><td>0.8475</td><td>3.0535</td><td>1.8317</td><td>1.2953</td><td>2.0130</td><td>0.7840</td><td>0.7613</td><td>0.6752</td></tr>
+              <tr><td>MemoryTalker (ICCV&nbsp;25)</td><td>0.8452</td><td>2.9995</td><td>1.7505</td><td>1.0548</td><td>1.9218</td><td>0.7757</td><td>0.8224</td><td>0.6585</td></tr>
+              <tr><td>JambaTalk (ACM&nbsp;TOMM&nbsp;26)</td><td>0.8311</td><td>3.0900</td><td>1.8128</td><td>1.2347</td><td>1.9551</td><td>0.7339</td><td>0.8554</td><td>0.6730</td></tr>
+              <tr class="has-background-warning-light"><td><strong>SNICTalk (Ours)</strong></td><td><strong>0.8264</strong></td><td><strong>2.9292</strong></td><td>1.7974</td><td>1.2608</td><td><strong>1.9073</strong></td><td>0.7672</td><td><strong>0.7610</strong></td><td><strong>0.6397</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="has-text-grey is-size-7" style="margin-top:0.75rem;">MVE / LVE in &times;10&minus;3 m; MOD / VE / AE / TC / FDD / FFE in &times;10&minus;4 m. Full nine-baseline comparison across BIWI and VOCASET is reported in the paper.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End quantitative results -->
+
+<!-- Component ablation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">Component Ablation</h2>
+        <div class="content has-text-justified">
+          <p>
+            The geometric reconstruction backbone alone performs worst on all eight metrics, confirming neither correction component is redundant with the backbone in isolation. Adding either the rest-articulation module or lip-focused refinement individually improves most metrics; the full model achieves the best or second-best result on all eight, with its advantage concentrated in LVE, VE, TC, and FDD, while the configuration without lip-focused refinement is marginally better on MVE, AE, and FFE &mdash; a trade-off consistent with lip-focused refinement acting as a targeted, rather than global, correction.
+          </p>
+        </div>
+        <div class="table-container" style="margin-top:1.5rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr><th>Configuration</th><th>MVE&nbsp;&darr;</th><th>LVE&nbsp;&darr;</th><th>TC&nbsp;&darr;</th><th>FDD&nbsp;&darr;</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Geometric Reconstruction only</td><td>2.4211</td><td>3.5777</td><td>4.7165</td><td>4.4150</td></tr>
+              <tr><td>w/o Rest-Articulation Module</td><td>2.3816</td><td>3.5654</td><td>4.5245</td><td>4.2150</td></tr>
+              <tr><td>w/o Lip-Focused Refinement</td><td>2.3722</td><td>3.5389</td><td>4.5756</td><td>3.8553</td></tr>
+              <tr class="has-background-warning-light"><td><strong>SNICTalk (ours)</strong></td><td>2.3776</td><td><strong>3.5238</strong></td><td><strong>4.3759</strong></td><td><strong>3.6898</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="has-text-grey is-size-7" style="margin-top:0.75rem;">BIWI6 Test-B. &times;10&minus;3 m (MVE, LVE), &times;10&minus;4 m (TC, FDD). Loss-term and sub-module ablations are reported in the paper.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End component ablation -->
+
+<!-- User study -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-five-fifths">
+        <h2 class="title is-3">User Study</h2>
+        <div class="content has-text-justified">
+          <p>
+            32 participants on Amazon Mechanical Turk compared SNICTalk against six baselines in a forced-choice A/B test on realism and lip-sync, on one representative sample each from VOCASET and BIWI6, with method identity withheld and left/right placement randomized.
+          </p>
+        </div>
+        <div class="table-container" style="margin-top:1rem;">
+          <table class="table is-bordered is-fullwidth is-hoverable">
+            <thead>
+              <tr><th>Comparison</th><th>VOCASET &mdash; Realism</th><th>BIWI6 &mdash; Realism</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Ours vs. JambaTalk</td><td>65.6% ours</td><td>93.8% ours</td></tr>
+              <tr><td>Ours vs. CodeTalker</td><td>78.1% ours</td><td>73.3% ours</td></tr>
+              <tr><td>Ours vs. MemoryTalker</td><td>75.0% ours</td><td>71.9% ours</td></tr>
+              <tr><td>Ours vs. TalkingStyle</td><td>81.3% ours</td><td>54.8% ours</td></tr>
+              <tr><td>Ours vs. FaceFormer</td><td>84.4% ours</td><td>65.6% ours</td></tr>
+              <tr><td>Ours vs. FaceDiffuser</td><td>68.8% ours</td><td>59.4% ours</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="has-text-grey is-size-7" style="margin-top:0.75rem;">Lip-sync results follow the same pattern; the largest margin is against JambaTalk on BIWI6, the smallest against TalkingStyle on the same dataset.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End user study -->
+
+<!-- BibTeX citation -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{jafari2027snictalk,
+  title     = {SNICTalk: SNIC-Inspired Dynamics for Temporally Coherent
+               Speech-Driven 3D Facial Animation},
+  author    = {Jafari, Farzaneh and Basu, Anup},
+  booktitle = {Computer Graphics Forum (Proc. EUROGRAPHICS)},
+  volume    = {46},
+  number    = {2},
+  year      = {2027}
+}</code></pre>
+  </div>
+</section>
+<!-- End BibTeX citation -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This research was partially funded by the Natural Sciences and Engineering Research Council (NSERC) and the Alberta Innovates Discovery Supplement fund.
+          </p>
+          <p>
+            Correspondence: <a href="mailto:farzane1@ualberta.ca">farzane1@ualberta.ca</a>, University of Alberta.
+          </p>
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>, which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page. This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
