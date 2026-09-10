@@ -1,0 +1,89 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.publication-title {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+  color: #363636;
+  font-weight: 400;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.publication-authors {
+  font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors a {
+  color: hsl(204, 86%, 53%);
+}
+
+.publication-authors a:hover {
+  text-decoration: underline;
+}
+
+.publication-links {
+  margin-top: 1.25rem;
+}
+
+.publication-links .link-block {
+  margin: 0.25rem;
+}
+
+.hero.teaser {
+  padding-bottom: 1rem;
+}
+
+.publication-video-outer {
+  max-width: 1100px;
+  margin: 0 auto 1.5rem;
+}
+
+.publication-video {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.publication-video iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.content img {
+  max-width: 100%;
+  height: auto;
+}
+
+table.table th, table.table td {
+  vertical-align: middle;
+  font-size: 0.92rem;
+}
+
+table.table th {
+  background-color: #fafafa;
+}
+
+#BibTeX pre {
+  background-color: #1b1d1e;
+  color: #e8e6e1;
+  padding: 1.25rem 1.5rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+.footer .content a {
+  color: hsl(204, 86%, 53%);
+}
